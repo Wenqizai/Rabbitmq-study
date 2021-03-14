@@ -145,7 +145,9 @@ spring.rabbitmq.listener.simple.max-concurrency=10
 spring.rabbitmq.listener.simple.prefetch=1
 ```
 
+## 消息功能的实现
 
+<img src="https://i.loli.net/2021/03/14/YSmQoLzeUvqVJfh.png" alt="image-20210314170402385" style="zoom:50%;" />
 
 # Kafka
 
