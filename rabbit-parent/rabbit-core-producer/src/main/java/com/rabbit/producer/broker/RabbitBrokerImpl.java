@@ -8,10 +8,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.Executors;
-
 /**
  * 消费发送的实现类
+ *
  * @author liangwq
  * @date 2021/3/15
  */
@@ -20,10 +19,11 @@ import java.util.concurrent.Executors;
 public class RabbitBrokerImpl implements RabbitBroker {
 
     @Autowired
-    private RabbitTemplate rabbitTemplate;
+    private RabbitTemplateContainer rabbitTemplateContainer;
 
     /**
      * 迅速发消息
+     *
      * @param message
      */
     @Override
@@ -46,6 +46,7 @@ public class RabbitBrokerImpl implements RabbitBroker {
                     message.getMessageId(),
                     System.currentTimeMillis()
             ));
+            RabbitTemplate rabbitTemplate = rabbitTemplateContainer.getTemplate(message);
             rabbitTemplate.convertAndSend(topic, routingKey, message, correlationData);
             log.info("RabbitBrokerImpl.sendKernel# send to rabbitmq, messageId: {}", message.getMessageId());
         });
