@@ -5,8 +5,12 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Maps;
 import com.rabbit.api.Message;
 import com.rabbit.api.MessageType;
-import com.rabbit.api.exception.MessageException;
 import com.rabbit.api.exception.MessageRuntimeException;
+import com.rabbit.common.convert.GenericMessageConverter;
+import com.rabbit.common.convert.RabbitMessageConverter;
+import com.rabbit.common.serializer.Serializer;
+import com.rabbit.common.serializer.SerializerFactory;
+import com.rabbit.common.serializer.impl.JacksonSerializerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -23,15 +27,20 @@ import java.util.Map;
  * 每一个topic, 对应一个RabbitTemplate
  * 1. 提高发送的效率
  * 2. 可以根据不同的需求定制化不同的RabbitTemplate, 比如每一个topic都有特定的routingKey
+ *
  * @author liangwq
  * @date 2021/3/15
  */
 @Component
 @Slf4j
-public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback{
-
+public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback {
+    /**
+     * String -> Topic
+     */
     private Map<String, RabbitTemplate> rabbitMap = Maps.newConcurrentMap();
     private Splitter splitter = Splitter.on("#");
+
+    private SerializerFactory serializerFactory = JacksonSerializerFactory.INSTANCE;
 
     @Autowired
     private ConnectionFactory connectionFactory;
@@ -51,8 +60,12 @@ public class RabbitTemplateContainer implements RabbitTemplate.ConfirmCallback{
         newRabbitTemplate.setRoutingKey(message.getRoutingKey());
         newRabbitTemplate.setRetryTemplate(new RetryTemplate());
 
-        // 对于message的序列化方式
-//        newRabbitTemplate.setMessageConverter(messageConverter);
+        // 添加序列化和反序列化和converter对象
+        Serializer serializer = serializerFactory.create();
+        GenericMessageConverter genericMessageConverter = new GenericMessageConverter(serializer);
+        RabbitMessageConverter rabbitMessageConverter = new RabbitMessageConverter(genericMessageConverter);
+        newRabbitTemplate.setMessageConverter(rabbitMessageConverter);
+
 
         // 非迅速投递的消息都需要confirm
         String messageType = message.getMessageType();
