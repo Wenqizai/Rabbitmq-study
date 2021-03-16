@@ -122,6 +122,16 @@ including network I/O, disk I/O and disk space usage.
 - 考虑数据是否入库，关键解决问题就是Redis和MySQL之间如何做到原子性？
 - 如果数据不入库，那么都存储到缓存中，如何设置将数据同步到MySQL的策略？
 
+## 技术要点脑图
+
+![RabbitMQ](https://i.loli.net/2021/03/16/3l8QsiRIHUWmovX.png)
+
+[1. 基础概念](https://mp.weixin.qq.com/s?__biz=MzkwOTIxNDQ3OA==&mid=2247533527&idx=1&sn=a4f6770b495de53b49a384824bcf63ef&source=41#wechat_redirect)
+
+[2. Exchange类型: Direct、fanout、topic](https://mp.weixin.qq.com/s/tM4R-2QdNATkoC1BukV8Ew)
+
+[3. 基础知识与应用场景](https://mp.weixin.qq.com/s/OfxE6cx1hRTM_WkilT8uiQ)
+
 ## 整合Spring Boot
 
 > 配置
@@ -148,6 +158,10 @@ spring.rabbitmq.listener.simple.prefetch=1
 ## 消息功能的实现
 
 <img src="https://i.loli.net/2021/03/14/YSmQoLzeUvqVJfh.png" alt="image-20210314170402385" style="zoom:50%;" />
+
+## 可靠性投递
+
+[实现方案](https://blog.csdn.net/weixin_41922349/article/details/106332591)
 
 # Kafka
 
