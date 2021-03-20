@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author liangwq
@@ -22,6 +23,10 @@ public class MessageStoreService {
         return brokerMessageMapper.insert(brokerMessage);
     }
 
+    public BrokerMessage query(String messageId) {
+        return brokerMessageMapper.selectByPrimaryKey(messageId);
+    }
+
     public void success(String messageId) {
         brokerMessageMapper.changeBrokerMessageStatus(messageId, BrokerMessageStatus.SEND_OK.getCode(), new Date());
     }
@@ -30,4 +35,11 @@ public class MessageStoreService {
         brokerMessageMapper.changeBrokerMessageStatus(messageId, BrokerMessageStatus.SEND_FAIL.getCode(), new Date());
     }
 
+    public List<BrokerMessage> fetchTimeOutMessage4Retry(BrokerMessageStatus brokerMessageStatus) {
+       return brokerMessageMapper.queryBrokerMessageStatus4Timeout(brokerMessageStatus.getCode());
+    }
+
+    public int updateTryCount(String brokerMessageId) {
+        return brokerMessageMapper.update4TryCount(brokerMessageId, new Date());
+    }
 }

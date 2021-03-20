@@ -1,5 +1,7 @@
 package com.rabbit.producer.autoconfigure;
 
+import com.rabbit.task.annotation.EnableElasticJob;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -7,6 +9,8 @@ import org.springframework.context.annotation.Configuration;
  * @author liangwq
  * @date 2021/3/14
  */
+@EnableElasticJob
 @Configuration
+@ComponentScan("com.rabbit.producer")
 public class RabbitProducerAutoConfiguration {
 }
