@@ -16,7 +16,7 @@ import com.dangdang.ddframe.job.lite.config.LiteJobConfiguration;
 import com.dangdang.ddframe.job.lite.spring.api.SpringJobScheduler;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
 
-@Configuration
+//@Configuration
 public class MySimpleJobConfig {
 
 	@Autowired

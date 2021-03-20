@@ -3,14 +3,15 @@ package com.bfxy.esjob.task;
 import com.bfxy.esjob.annotation.JobTrace;
 import com.dangdang.ddframe.job.api.ShardingContext;
 import com.dangdang.ddframe.job.api.simple.SimpleJob;
+import com.rabbit.task.annotation.ElasticJobConfig;
 import org.springframework.stereotype.Component;
 
-//@ElasticJobConfig
+//@ElasticJobConfig(name = "com.esjob.task", cron = "0/5 * * * * ?")
 @Component
 public class MySimpleJob implements SimpleJob {
 
 	
-	@JobTrace
+//	@JobTrace
 	@Override
 	public void execute(ShardingContext shardingContext) {
 
