@@ -13,6 +13,7 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 消费发送的实现类
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @author liangwq
  * @date 2021/3/15
  */
-@Component
+@Service
 @Slf4j
 public class RabbitBrokerImpl implements RabbitBroker {
 

@@ -24,7 +24,7 @@ public interface BrokerMessageMapper {
 
     int updateByPrimaryKeySelective(BrokerMessage record);
 
-    int updateByPrimaryKeyWithBLOBs(BrokerMessage record);
+//    int updateByPrimaryKeyWithBLOBs(BrokerMessage record);
 
     int updateByPrimaryKey(BrokerMessage record);
 
